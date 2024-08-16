@@ -1,0 +1,25 @@
+{
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.venv/*/**": true
+    },
+    "mypy-type-checker.args": [
+        "--config=/workspaces/catboost_inference_exp_service/pyproject.toml"
+    ],
+    "mypy-type-checker.path": [
+        "/workspaces/catboost_inference_exp_service/.venv/bin/mypy"
+    ],
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "python.defaultInterpreterPath": "/workspaces/catboost_inference_exp_service/.venv/bin/python",
+    "ruff.path": [
+        "/workspaces/catboost_inference_exp_service/.venv/bin/ruff"
+    ]
+}

@@ -1,0 +1,38 @@
+name: ${PROJECT_ID}
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    expose:
+      - 6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 30s
+      retries: 50
+      start_period: 30s
+    restart: always
+  # init:
+  # api:
+  # test:
+  develop:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        - USERNAME=${DEVELOPER_USERNAME}
+        - USER_UID=${DEVELOPER_USER_UID}
+        - USER_GID=${DEVELOPER_USER_GID}
+    environment:
+      # - PYTHONPATH=/workspaces/${PROJECT_ID}/src
+      - POETRY_VIRTUALENVS_IN_PROJECT=${POETRY_VIRTUALENVS_IN_PROJECT}
+      - AWS_ACCESS_KEY_ID=${DVC_REMOTE_AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${DVC_REMOTE_AWS_SECRET_ACCESS_KEY}
+    command: sleep infinity
+    volumes:
+      - ${HOME:-~}/.ssh:/home/${DEVELOPER_USERNAME}/.ssh:ro
+      - ${PROJECT_DIR_PATH}:/workspaces/${PROJECT_ID}:cached
+
+volumes:
+  artifacts-volume:
